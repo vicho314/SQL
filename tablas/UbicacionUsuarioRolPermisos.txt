@@ -1,4 +1,4 @@
-FALTAN INSERTAR DATOS Y SINCRONIZAR
+DATOS DE REFERENCIA, FALTA SINCRONIZAR
 
 CREATE TABLE IF NOT EXISTS UBICACION
 (
@@ -40,3 +40,31 @@ CREATE TABLE IF NOT EXISTS PERMISOS
 	id_usuario SERIAL,
 	FOREIGN KEY(id_rol, id_usuario) REFERENCES ROL(id_rol, id_usuario)
 );
+
+INSERT INTO UBICACION (numero_vivienda, ciudad, calle) VALUES
+(101, 'Santiago', 'Av. Providencia 123'),
+(102, 'Valparaíso', 'Calle Condell 456'),
+(103, 'Concepción', 'Av. Los Carrera 789'),
+(104, 'La Serena', 'Pasaje Elqui 321'),
+(105, 'Antofagasta', 'Av. Brasil 654');
+
+INSERT INTO USUARIO (id_usuario, numero_vivienda, correo_usuario, contraseña, nombre_real, nombre_usuario) VALUES
+(1, 101, 'juan.perez@example.com', 'clave123', 'Juan Pérez', 'juanp'),
+(2, 102, 'maria.gomez@example.com', 'pass456', 'María Gómez', 'mariag'),
+(3, 103, 'carlos.lopez@example.com', 'admin789', 'Carlos López', 'carlosl'),
+(4, 104, 'ana.ramirez@example.com', 'ana321', 'Ana Ramírez', 'anar'),
+(5, 105, 'lucas.diaz@example.com', 'lucas999', 'Lucas Díaz', 'lucasd');
+
+INSERT INTO ROL (id_rol, id_usuario, nombre_rol) VALUES
+(1, 1, 'cliente'),         -- Juan
+(1, 2, 'cliente'),         -- María
+(2, 3, 'administrador'),   -- Carlos
+(3, 4, 'jefe de tienda'),  -- Ana
+(1, 5, 'cliente');         -- Lucas
+
+INSERT INTO PERMISOS (id_rol, id_usuario) VALUES
+(1, 1),  -- Juan (cliente)
+(1, 2),  -- María (cliente)
+(2, 3),  -- Carlos (admin)
+(3, 4),  -- Ana (jefa de tienda)
+(1, 5);  -- Lucas (cliente)
