@@ -1,0 +1,53 @@
+CREATE TABLE IF NOT EXISTS Lista_de_deseos
+(
+  	id_lista INT PRIMARY KEY,
+  	nombre_lista varchar(15)
+);
+
+CREATE TABLE IF NOT EXISTS Carta
+(
+	id_carta INT PRIMARY KEY,
+	posicion_deseada INT,--der?
+	precio decimal(10,2),
+	stock INT,
+	rareza varchar(15),
+	año DATE,
+	estado varchar(8)
+	--id_producto INT,
+	--FOREIGN KEY(id_producto) REFERENCES Producto(id_producto)
+);
+
+CREATE TABLE IF NOT EXISTS Lista_de_deseosXCarta
+(
+  	id_lista INT,
+  	id_carta INT,
+	cantidad_veces_agregada INT,
+	PRIMARY KEY (id_lista, id_carta),
+	FOREIGN KEY(id_lista) REFERENCES Lista_De_Deseos(id_lista),
+	FOREIGN KEY(id_carta) REFERENCES Carta(id_carta)
+);
+
+  ----------------AGREGACIÓN DE DATOS--------------------------
+  ----------------LISTA_DE_DESEOS------------------------------
+INSERT INTO Lista_De_Deseos VALUES(2345, 'Listadedeseos1');
+INSERT INTO Lista_De_Deseos VALUES(3456, 'Listadedeseos2');
+INSERT INTO Lista_De_Deseos VALUES(4567, 'Listadedeseos3');
+INSERT INTO Lista_De_Deseos VALUES(5678, 'Listadedeseos4');
+INSERT INTO Lista_De_Deseos VALUES(6789, 'Listadedeseos5');
+  
+  ----------------------AGREGACIÓN DE DATOS----------------------------
+  ----------------------CARTA------------------------------------------
+INSERT INTO CARTA VALUES(12233, 1, 10000, 5, 'Mitica', '1990-01-01', 'nuevo');
+INSERT INTO CARTA VALUES(22333, 5, 8000, 15, 'Rara', '2000-01-01', 'nuevo');
+INSERT INTO CARTA VALUES(33444, 25, 7000, 18, 'Infrecuente', '2003-01-01', 'nuevo');
+INSERT INTO CARTA VALUES(44555, 30, 3000, 30, 'Comun', '1995-01-01', 'nuevo');
+INSERT INTO CARTA VALUES(55666, 3, 9000, 10, 'Rara', '1998-01-01', 'nuevo');
+  
+   -----------------------AGREGACIÓN DE DATOS--------------------
+  -----------------------Lista_de_deseosXCarta-------------------
+INSERT INTO Lista_de_deseosXCarta VALUES(2345, 12233, 10);
+INSERT INTO Lista_de_deseosXCarta VALUES(3456, 22333, 6);
+INSERT INTO Lista_de_deseosXCarta VALUES(4567, 33444, 2);
+INSERT INTO Lista_de_deseosXCarta VALUES(5678, 44555, 1);
+INSERT INTO Lista_de_deseosXCarta VALUES(6789, 55666, 8);
+ 
