@@ -1,0 +1,30 @@
+CREATE TABLE if not EXISTS PRODUCTO(
+  id_producto INT PRIMARY KEY,
+  id_juego INT REFERENCES JUEGO(id_juego),
+  id_carta INT REFERENCES CARTA(id_carta),
+  id_ranking INT REFERENCES RANKING(id_ranking),
+  id_tienda INT REFERENCES TIENDA(id_tienda),
+  stock INT,
+  cant_vendida INT,
+  url TEXT
+);
+
+CREATE TABLE if not EXISTS CARRITO_X_PRODUCTO(
+  id_producto INT REFERENCES PRODUCTO(id_producto),
+  id_carro INT REFERENCES CARRITO(id_carro),
+  disponibilidad BOOLEAN,
+  PRIMARY KEY (id_producto,id_carro)
+);
+
+CREATE TABLE IF NOT EXISTS LISTA_DE_DESEOS_X_PRODUCTOS(
+	id_lista INT REFERENCES LISTA_DE_DESEOS(id_lista),
+  	id_producto INT REFERENCES PRODUCTO(id_producto),
+  	PRIMARY KEY(id_lista,id_producto)
+);
+
+CREATE TABLE if not EXISTS BOLETA_X_PRODUCTO(
+  id_producto INT REFERENCES PRODUCTO(id_producto),
+  id_boleta INT REFERENCES BOLETA(id_boleta),
+  PRIMARY key (id_producto,id_boleta)
+);
+
