@@ -1,0 +1,42 @@
+FALTAN INSERTAR DATOS Y SINCRONIZAR
+
+CREATE TABLE IF NOT EXISTS UBICACION
+(
+	numero_vivienda INT PRIMARY KEY,
+	ciudad TEXT NOT NULL,
+	calle TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS USUARIO
+(
+	id_usuario SERIAL PRIMARY KEY,
+	--id_lista SERIAL,
+	numero_vivienda INT NOT NULL,
+	--id_metodo_pago SERIAL,
+	correo_usuario TEXT UNIQUE,
+	contraseña VARCHAR(64) NOT NULL,
+	nombre_real TEXT NOT NULL,
+	nombre_usuario VARCHAR(64) NOT NULL,
+	--FOREIGN KEY(id_lista) REFERENCES LISTA_DE_DESEOS(id_lista),
+	FOREIGN KEY(numero_vivienda) REFERENCES UBICACION(numero_vivienda)
+	--FOREIGN KEY(id_metodo_pago) REFERENCES METODOS_DE_PAGO(id_metodo_de_pago)
+);
+
+CREATE TABLE IF NOT EXISTS ROL
+(
+	id_rol SERIAL,
+	id_usuario INT,
+	--id_tienda INT,
+	nombre_rol TEXT,
+	PRIMARY KEY(id_rol,id_usuario),
+	FOREIGN KEY(id_usuario) REFERENCES USUARIO(id_usuario)
+	--FOREIGN KEY(id_tienda) REFERENCES TIENDA(id_tienda); 
+);
+
+CREATE TABLE IF NOT EXISTS PERMISOS
+(
+	id_permiso SERIAL PRIMARY KEY,
+	id_rol SERIAL,
+	id_usuario SERIAL,
+	FOREIGN KEY(id_rol, id_usuario) REFERENCES ROL(id_rol, id_usuario)
+);
