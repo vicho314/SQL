@@ -1,0 +1,70 @@
+CREATE table if not EXISTS Tienda (
+  id_tienda INT PRIMARY KEY,
+  id_ranking INT,
+  nombre_tienda TEXT,
+  telefono_tienda CHAR(9),
+  calle_tienda TEXT,
+  numero_tienda INT CHECK (numero_tienda > 0),
+  ciudad_tienda TEXT,
+  FOREIGN KEY(id_ranking) REFERENCES Ranking(id_ranking)
+  );
+ 
+ 
+ CREATE TABLE IF NOT EXISTS Ranking (
+   id_ranking INT PRIMARY KEY,
+   fecha_ranking_v DATE
+   );
+ 
+ 
+ CREATE TABLE IF NOT EXISTS Valoracion (
+   id_valoracion INT PRIMARY KEY,
+   id_producto INT,
+   id_usuario INT,
+   puntuacion INT CHECK (puntuacion >= 0),
+   FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
+   FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+   );
+ 
+ CREATE TABLE IF NOT EXISTS JuegosDeMesa (
+   id_juego INT PRIMARY KEY,
+   id_producto INT,
+   precio DECIMAL,
+   nombre_juego TEXT,
+   tipo VARCHAR(10),
+   FOREIGN KEY (id_producto) REFERENCES Producto(id_producto)
+   );
+ 
+ INSERT INTO Tienda VALUES 
+ (1, 2,'Cool Carding','998877665','Juan Perez',25,'Santiago'),
+ (2, 3,'First Impact Co.','992247665','Brasil',10,'San Bernardo'),
+ (3, 4,'Juegos Buenos','991732669','Juan Perez',26,'Santiago'),
+ (4, 5,'Gato Joker','918124657','Nerea',13,'San Miguel'),
+ (5, 1,'Cartas Locas','926654161','Carlos Ramírez',443,'Santiago');
+ 
+ INSERT INTO Ranking VALUES
+ (1,'2025-06-01'),
+ (2,'2025-06-02'),
+ (3,'2025-06-03'),
+ (4,'2025-06-04'),
+ (5,'2025-06-16');
+ 
+ 
+ INSERT INTO Valoracion VALUES
+ (1,1,1,5),
+ (2,1,2,7),
+ (3,1,3,8),
+ (4,2,1,4),
+ (5,2,3,7),
+ (6,3,4,6),
+ (7,3,5,2),
+ (8,4,5,1),
+ (9,5,3,1),
+ (10,1,2,5);
+ 
+ /* FIXME: Sincronizar con Producto*/
+ INSERT INTO JuegosDeMesa VALUES
+ (1,1,10000,'QuickCards','Cartas'),
+ (2,2,20000,'UNO Family Edition','Cartas'),
+ (3,3,30000,'Exploding Kittens Master Edition', 'Cartas'),
+ (4,4,40000,'Calabozos y Dragones 3','Rol'),
+ (5,5,50000,'Catan','Estrategia');
