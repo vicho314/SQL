@@ -1,0 +1,192 @@
+CREATE TABLE IF NOT EXISTS UBICACION
+
+(
+	numero_vivienda INT PRIMARY KEY,
+	ciudad TEXT NOT NULL,
+	calle TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS LISTA_DE_DESEOS
+
+(
+  	id_lista INT PRIMARY KEY,
+  	nombre_lista varchar(15) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS RANKING 
+
+( 
+	id_ranking INT PRIMARY KEY, 
+	fecha_ranking_v DATE  NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS METODOS_DE_PAGO 
+
+( 
+	id_metodo_de_pago INT PRIMARY KEY, 
+	tipo_de_pago VARCHAR(8), 
+	banco TEXT,
+	nombre_titular TEXT, 
+	numero_tarjeta BIGINT, 
+	fecha_vencimiento DATE, 
+	codigo_seguridad INT, 
+	rut_titular VARCHAR(30) 	
+);
+
+CREATE TABLE IF NOT EXISTS USUARIO
+(
+	id_usuario INT PRIMARY KEY,
+	id_lista INT,
+	numero_vivienda INT NOT NULL,
+	id_metodo_pago INT,
+	correo_usuario TEXT UNIQUE,
+	contraseña VARCHAR(64) NOT NULL,
+	nombre_real TEXT NOT NULL,
+	nombre_usuario VARCHAR(64) NOT NULL,
+	FOREIGN KEY(id_lista) REFERENCES LISTA_DE_DESEOS(id_lista),
+	FOREIGN KEY(numero_vivienda) REFERENCES UBICACION(numero_vivienda),
+	FOREIGN KEY(id_metodo_pago) REFERENCES METODOS_DE_PAGO(id_metodo_de_pago)
+);
+
+CREATE table if not EXISTS TIENDA 
+( 
+	id_tienda INT PRIMARY KEY, 
+	id_ranking INT, 
+	nombre_tienda TEXT, 
+	telefono_tienda CHAR(9), 
+	calle_tienda TEXT, 
+	numero_tienda INT CHECK (numero_tienda > 0), 
+	ciudad_tienda TEXT 
+);
+
+CREATE TABLE IF NOT EXISTS ROL
+(
+	id_rol INT,
+	id_usuario INT,
+	id_tienda INT,
+	id_ranking INT,
+	nombre_rol TEXT NOT NULL,
+	PRIMARY KEY(id_rol,id_usuario),
+	FOREIGN KEY(id_usuario) REFERENCES USUARIO(id_usuario),
+	FOREIGN KEY(id_tienda) REFERENCES TIENDA(id_tienda),
+	FOREIGN KEY(id_ranking) REFERENCES RANKING(id_ranking)
+);
+
+CREATE TABLE IF NOT EXISTS PERMISOS
+(
+	id_permiso INT PRIMARY KEY,
+	id_rol INT,
+	id_usuario INT,
+	FOREIGN KEY(id_rol, id_usuario) REFERENCES ROL(id_rol, id_usuario)
+);
+
+CREATE TABLE IF NOT EXISTS PRODUCTO
+( 
+	id_producto INT PRIMARY KEY,
+	id_ranking INT,
+	id_tienda INT,
+	stock INT,
+	cant_vendida INT,
+	url TEXT,
+	FOREIGN KEY(id_ranking) REFERENCES RANKING(id_ranking),
+	FOREIGN KEY(id_tienda) REFERENCES TIENDA(id_tienda)
+);
+
+CREATE TABLE IF NOT EXISTS VALORACION 
+( 
+	id_valoracion INT PRIMARY KEY, 
+	id_producto INT, 
+	id_usuario INT, 
+	puntuacion INT CHECK (puntuacion >= 0) DEFAULT 0, 
+	FOREIGN KEY (id_producto) REFERENCES PRODUCTO(id_producto), 
+	FOREIGN KEY (id_usuario) REFERENCES USUARIO(id_usuario) 
+);
+
+CREATE TABLE IF NOT EXISTS JUEGO
+( 
+	id_juego INT PRIMARY KEY, 
+	id_producto INT, 
+	precio DECIMAL NOT NULL, 
+	nombre_juego TEXT NOT NULL, 
+	tipo VARCHAR(10) NOT NULL, 
+	FOREIGN KEY (id_producto) REFERENCES PRODUCTO(id_producto) 
+);
+
+CREATE TABLE IF NOT EXISTS CARRITO 
+( 
+	id_carro BIGINT PRIMARY KEY,
+	id_usuario INT,
+	cantidad_elementos INT, 
+	total_pago DECIMAL(10,2), 
+	estado_carrito BOOLEAN, 
+	id_metodo_de_pago BIGINT,
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario), 
+	FOREIGN KEY (id_metodo_de_pago) REFERENCES METODOS_DE_PAGO(id_metodo_de_pago) 
+);
+
+CREATE TABLE IF NOT EXISTS BOLETA
+
+( 
+	id_boleta INT PRIMARY KEY,
+	id_carro BIGINT,
+	id_metodo_de_pago BIGINT,
+	fecha_boleta DATE , 
+	FOREIGN KEY (id_carro) REFERENCES carrito(id_carro),
+	FOREIGN KEY (id_metodo_de_pago) REFERENCES METODOS_DE_PAGO(id_metodo_de_pago) 
+);
+
+CREATE TABLE if not EXISTS CARRITO_X_PRODUCTO
+( 
+	id_producto INT,
+	id_carro INT,
+	disponibilidad BOOLEAN,
+	PRIMARY KEY (id_producto,id_carro), 
+	FOREIGN KEY(id_producto) REFERENCES PRODUCTO(id_producto),
+	FOREIGN KEY(id_carro) REFERENCES CARRITO(id_carro)
+	
+);
+
+CREATE TABLE IF NOT EXISTS LISTA_DE_DESEOS_X_PRODUCTOS
+
+( 
+	id_producto INT,
+	id_lista INT,
+	PRIMARY KEY(id_lista,id_producto),
+	FOREIGN KEY(id_lista) REFERENCES LISTA_DE_DESEOS(id_lista),
+	FOREIGN KEY(id_producto) REFERENCES PRODUCTO(id_producto) 
+);
+
+CREATE TABLE if not EXISTS BOLETA_X_PRODUCTO
+
+(
+	id_producto INT,
+	id_boleta INT,
+	PRIMARY KEY (id_producto,id_boleta), 
+	FOREIGN KEY(id_producto) REFERENCES PRODUCTO(id_producto),
+	FOREIGN KEY(id_boleta) REFERENCES BOLETA(id_boleta)
+	
+);
+
+CREATE TABLE IF NOT EXISTS CARTA
+(
+	id_carta INT PRIMARY KEY,
+	posicion_deseada INT NOT NULL,
+	precio DECIMAL NOT NULL,
+	stock INT NOT NULL,
+	rareza varchar(15),
+	año DATE,
+	estado varchar(8),
+	id_producto INT,
+	FOREIGN KEY(id_producto) REFERENCES PRODUCTO(id_producto)
+);
+
+CREATE TABLE IF NOT EXISTS LISTA_DE_DESEOSXCARTA
+
+(
+  	id_lista INT,
+  	id_carta INT,
+	cantidad_veces_agregada INT NOT NULL,
+	PRIMARY KEY (id_lista, id_carta),
+	FOREIGN KEY(id_lista) REFERENCES LISTA_DE_DESEOS(id_lista),
+	FOREIGN KEY(id_carta) REFERENCES CARTA(id_carta)
+);
