@@ -1,0 +1,136 @@
+INSERT INTO UBICACION (numero_vivienda, ciudad, calle) VALUES
+(101, 'Santiago', 'Av. Providencia 123'),
+(102, 'Valparaíso', 'Calle Condell 456'),
+(103, 'Concepción', 'Av. Los Carrera 789'),
+(104, 'La Serena', 'Pasaje Elqui 321'),
+(105, 'Valencia', 'Paraparal 654');
+
+INSERT INTO Lista_De_Deseos VALUES(2345, 'Listadedeseos1');
+INSERT INTO Lista_De_Deseos VALUES(3456, 'Listadedeseos2');
+INSERT INTO Lista_De_Deseos VALUES(4567, 'Listadedeseos3');
+INSERT INTO Lista_De_Deseos VALUES(5678, 'Listadedeseos4');
+INSERT INTO Lista_De_Deseos VALUES(6789, 'Listadedeseos5');
+
+INSERT INTO RANKING VALUES
+ (1,'2025-06-01'),
+ (2,'2025-06-02'),
+ (3,'2025-06-03'),
+ (4,'2025-06-04'),
+ (5,'2025-06-16');
+
+INSERT into METODOS_DE_PAGO(id_metodo_de_pago, tipo_de_pago, banco, nombre_titular, numero_tarjeta, fecha_vencimiento, codigo_seguridad, rut_titular)
+VALUES
+(243,'credito','Banco_de_Chile','Juan Pérez',1243547,'2024-09-22',123456,'22.556.874-0'),
+(543,'debito','Scotiabank_Chile','María Gómez',9874638,'2021-10-22',765389,'13.876.653-8'),
+(763,'debito','Banco_Santander','Carlos López',1526376,'2029-05-15',091253,'16.765.767-8'),
+(846,'credito','BCI','Ana Ramírez',576378,'2025-02-28',576378,'11.654.789-4'),
+(873,'credito','Banco_Falabella','Lucas Díaz',9836472,'2027-04-03',121378,'12.654.821-7');
+
+INSERT INTO USUARIO (id_usuario, id_lista ,numero_vivienda, correo_usuario, contraseña, nombre_real, nombre_usuario) VALUES
+(1,2345, 101, 'juan.perez@example.com', 'clave123', 'Juan Pérez', 'juanp'),
+(2,3456, 102, 'maria.gomez@example.com', 'pass456', 'María Gómez', 'mariag'),
+(3,4567, 103, 'carlos.lopez@example.com', 'admin789', 'Carlos López', 'carlosl'),
+(4,5678, 104, 'ana.ramirez@example.com', 'ana321', 'Ana Ramírez', 'anar'),
+(5,6789, 105, 'lucas.diaz@example.com', 'lucas999', 'Lucas Díaz', 'lucasd');
+
+INSERT INTO TIENDA VALUES
+ (1, 2,'Cool Carding','998877665','Juan Perez',25,'Santiago'),
+ (2, 3,'First Impact Co.','992247665','Brasil',10,'San Bernardo'),
+ (3, 4,'Juegos Buenos','991732669','Juan Perez',26,'Santiago'),
+ (4, 5,'Gato Joker','918124657','Nerea',13,'San Miguel'),
+ (5, 1,'Cartas Locas','926654161','Carlos Ramírez',443,'Santiago');
+
+INSERT INTO ROL (id_rol, id_usuario, nombre_rol) VALUES
+(1, 1, 'cliente'),         
+(1, 2, 'cliente'),         
+(2, 3, 'administrador'),   
+(3, 4, 'jefe de tienda'),  
+(1, 5, 'cliente');
+
+INSERT INTO PERMISOS (id_permiso, id_rol, id_usuario) VALUES
+(10, 1, 1),  
+(16, 1, 2),  
+(24, 2, 3),  
+(32, 3, 4),  
+(13, 1, 5);  
+
+INSERT INTO PRODUCTO (id_producto, id_ranking, id_tienda, stock, cant_vendida, url)
+VALUES(1, 5, 1,30,100,'https://marcek.com/producto1'),
+      (2, 1, 2,3,10,'https://developer.mozilla.org/prod2'),
+      (3, 1, 3,5,1,'https://www./?key1=value1&key2=value2/producto3'),
+      (4, 3, 4,2,2,'http://www.juegazos.com/pr4'),
+      (5, 4, 5,40,5,'https://www.portaldebed.com/%producto5%'),
+	(7, 2, 3,15,87,'https://www.monopoly.com/%producto7%'),
+	(8, 4, 3,10,5,'https://www.judokilo.com/%producto1%'),
+      (9, 5, 3,77,5,'https://www.lodokedo.com/%producto9%'),
+      (6, 4, 5,63,5,'https://www.conectafour.com/%producto8%'),
+      (10, 4, 2,28,5,'https://www.poke.com/%producto10%'); 
+
+      
+INSERT INTO VALORACION VALUES
+ (1,1,1,5),
+ (2,1,2,7),
+ (3,1,3,8),
+ (4,2,1,4),
+ (5,2,3,7),
+ (6,3,4,6),
+ (7,3,5,2),
+ (8,4,5,1),
+ (9,5,3,1),
+ (10,4,2,5);
+
+INSERT INTO CARRITO (id_carro, id_usuario, cantidad_elementos, total_pago, estado_carrito, id_metodo_de_pago)
+VALUES
+(1253, 1, 4, 12.990, TRUE, 243),
+(9283, 2, 1, 3.990, TRUE, 543),
+(7384, 3, 2 ,8.990, FALSE,763),
+(8746, 4, 7, 17.990, TRUE, 846),
+(9841, 5, 5, 15.990, FALSE, 873);
+
+INSERT INTO JUEGO VALUES
+ (1,6,10000,'QuickCards','Cartas'),
+ (2,7,20000,'UNO Family Edition','Cartas'),
+ (3,8,30000,'Exploding Kittens Master Edition', 'Cartas'),
+ (4,9,40000,'Calabozos y Dragones 3','Rol'),
+ (5,10,50000,'Catan','Estrategia');
+
+INSERT INTO BOLETA (id_boleta,id_carro,id_metodo_de_pago,fecha_boleta)
+VALUES
+  (12345678,1253,243,'2024-05-10'),
+  (98564377,9283,543,'2022-07-12'),
+  (11354626,7384,763,'2026-09-26'),
+  (01027787,8746,846,'2020-04-13'),
+  (22345256,9841,873,'2023-11-23');
+
+INSERT INTO CARTA VALUES(12233, 1, 10000, 5, 'Mitica', '1990-01-01', 'nuevo');
+INSERT INTO CARTA VALUES(22333, 5, 8000, 15, 'Rara', '2000-01-01', 'nuevo');
+INSERT INTO CARTA VALUES(33444, 3, 7000, 18, 'Infrecuente', '2003-01-01', 'nuevo');
+INSERT INTO CARTA VALUES(44555, 2, 3000, 30, 'Comun', '1995-01-01', 'nuevo');
+INSERT INTO CARTA VALUES(55666, 4, 9000, 10, 'Rara', '1998-01-01', 'nuevo');
+
+INSERT into CARRITO_X_PRODUCTO(id_producto,id_carro,disponibilidad)
+VALUES(5,8746,TRUE),
+      (1,9283,TRUE),
+      (2,1253,TRUE),
+      (1,9841,FALSE),
+      (1,7384,FAlSE);
+
+INSERT INTO LISTA_DE_DESEOS_X_PRODUCTOS (id_lista,id_producto)
+VALUES (3456, 10),
+        (6789, 8),
+        (5678, 2),
+        (6789, 5),
+        (4567,5);
+
+INSERT into BOLETA_X_PRODUCTO (id_producto,id_boleta)
+VALUES(10,12345678),
+      (5,98564377),
+      (2,11354626),
+      (8,01027787),
+      (9,22345256);
+
+INSERT INTO Lista_de_deseosXCarta VALUES(2345, 12233, 10);
+INSERT INTO Lista_de_deseosXCarta VALUES(3456, 22333, 6);
+INSERT INTO Lista_de_deseosXCarta VALUES(4567, 33444, 2);
+INSERT INTO Lista_de_deseosXCarta VALUES(5678, 44555, 1);
+INSERT INTO Lista_de_deseosXCarta VALUES(6789, 55666, 8);
