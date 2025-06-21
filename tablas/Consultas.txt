@@ -1,0 +1,46 @@
+--CONSULTA 1, Agregar un juego de mesa / carta al carrito de compras.
+
+INSERT INTO CARRITO_X_PRODUCTO VALUES(3,9283,TRUE);
+
+-- CONSULTA 2, Eliminar un juego de mesa / carta del carrito de compras.
+--Eliminamos el producto de la consulta 1
+
+DELETE FROM CARRITO_X_PRODUCTO
+WHERE id_carro = 9283 AND id_producto = 3;
+
+-- CONSULTA 3 Mostrar los juegos de mesa / cartas del carrito de compras
+
+-- Suponiendo que mostraremos lAS CARTAS
+
+SELECT id_producto FROM carrito_X_producto 
+WHERE id_producto <= 5;
+
+-- CONSULTA 4, Mostrar el precio total a pagar por el carrito de compras.
+
+SELECT TOTAL_PAGO FROM CARRITO;
+
+-- CONSULTA 5, Mostrar todos los juegos de mesa y cartas que se vendan en una ubicacion geografica especifica.
+--Consideramos que queremos buscar en la ciudad de Santiago
+
+SELECT JUEGO.id_juego, CARTA.id_carta, TIENDA.ciudad_tienda
+FROM PRODUCTO
+    JOIN TIENDA ON PRODUCTO.id_tienda = TIENDA.id_tienda
+    LEFT JOIN CARTA ON PRODUCTO.id_producto = CARTA.id_producto
+    LEFT JOIN JUEGO ON PRODUCTO.id_producto = JUEGO.id_producto
+WHERE TIENDA.ciudad_tienda = 'Santiago';
+
+-- CONSULTA 6, Mostrar ranking de los productos con mas ventas.
+
+SELECT id_producto, cant_vendida
+FROM PRODUCTO
+ORDER BY cant_vendida DESC;
+
+-- CONSULTA 7, Mostrar lista de deseos de un usuario.
+-- Para conocer los productos dentro de una lista de deseos necesitamos acceder también a la tabla de LISTA_DE_DESEOS_X_PRODUCTOS
+
+SELECT USUARIO.nombre_usuario, LISTA_DE_DESEOS.nombre_lista, PRODUCTO.id_producto
+FROM USUARIO
+JOIN LISTA_DE_DESEOS ON USUARIO.id_lista = LISTA_DE_DESEOS.id_lista
+JOIN LISTA_DE_DESEOS_X_PRODUCTOS ON LISTA_DE_DESEOS.id_lista = LISTA_DE_DESEOS_X_PRODUCTOS.id_lista
+JOIN PRODUCTO ON LISTA_DE_DESEOS_X_PRODUCTOS.id_producto = PRODUCTO.id_producto
+WHERE USUARIO.id_usuario =5;
